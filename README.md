@@ -28,6 +28,4 @@ a[0][2];
 ### MatrixMultiplication:
 
 The name of the function speaks for itself.  
-MatrixMultiplication is a simple function for multiplying matrices with a time complexity of O(n^3), where n is the number of dimensions of the matrix.   
-**TIP:** This function returns a 0D matrix with incorrect input data, so to check whether the function worked properly, you can use   
-```if([name of result matrix].getDimensions()!=0)```
+MatrixMultiplication is a simple function for multiplying matrices with a time complexity of O(n^3), where n is the number of dimensions of the matrix.
