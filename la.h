@@ -41,6 +41,7 @@ namespace la {
     void cross_prod(Vector& vector1, Vector& vector2, Vector& resultVector);
     double VectLen(Vector& vector);
     void VectNorm(Vector& vector);
+    void LinSys_Gauss(SMatrix& matrix, Vector& vector, Vector& resultVector);
 }
 
 #endif
