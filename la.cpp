@@ -250,4 +250,54 @@ namespace la {
         double len=VectLen(vector);
         for(int i=0; i<vector.getDimensions(); i++) vector[i]/=len;
     }
+
+    void LinSys_Gauss(SMatrix& matrix, Vector& vector, Vector& resultVector){
+        int dimensions = matrix.getDimensions();
+        if(dimensions!=resultVector.getDimensions()||dimensions!=vector.getDimensions()) return;
+        SMatrix cmatrix(dimensions);
+        Vector cvector(dimensions);
+        for(int i=0; i<dimensions; i++){
+            for(int j=0; j<dimensions; j++){
+                cmatrix[i][j]=matrix[i][j];
+            }
+            cvector[i]=vector[i];
+        }
+        for (int i=0; i<dimensions; i++) {
+            if (std::abs(cmatrix[i][i])<1e-9) {
+                int sw=-1;
+                for (int u=i+1; u<dimensions; u++) {
+                    if (std::abs(cmatrix[i][u])>=1e-9) {
+                        sw=u;
+                        break;
+                    }
+                }
+                if (sw==-1) {
+                    return;
+                }
+                for (int l=0; l<dimensions; l++) {
+                    double temp = cmatrix[l][i];
+                    cmatrix[l][i] = cmatrix[l][sw];
+                    cmatrix[l][sw] = temp;
+                }
+                double temp = cvector[i];
+                cvector[i] = cvector[sw];
+                cvector[sw] = temp;
+            }
+            double k=cmatrix[i][i];
+            for (int l=0; l<dimensions; l++) {
+                cmatrix[l][i]/=k;
+            }
+            cvector[i]/=k;
+            for(int l=0; l<dimensions; l++){
+                if(l!=i){
+                    k=cmatrix[i][l];
+                    for (int j=0; j<dimensions; j++) {
+                        cmatrix[j][l]-=k*cmatrix[j][i];
+                    }
+                    cvector[l]-=k*cvector[i];
+                }
+            }
+        }
+        for(int i=0; i<dimensions; i++) resultVector[i]=cvector[i];
+    }
 }
