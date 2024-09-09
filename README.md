@@ -105,3 +105,7 @@ Time complexity of this function is O(n), where n is the number of dimensions of
 
 Normalizes Vector.  
 Time complexity of this function is O(n), where n is the number of dimensions of the vector.
+
+### LinSys_Gauss:
+
+It takes three arguments matrix, which represents coefficients near variables, vector (numbers after =) and resultVector where stores result values of all variables.
