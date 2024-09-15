@@ -7,6 +7,11 @@ Namespace for everything below
 The coordinates of the matrix elements are implemented in a slightly unusual way:
 
 ![Матриця](RMD/Image.png)
+
+## Return type of functions:
+
+All functions below that have return type - bool, excluding Vect_IndepCheck, return true if the function executes successfully, if the function returns false check if you pass the arguments correctly.
+
 # Classes:
 ## SMatrix:
 
@@ -34,7 +39,7 @@ a[0][1]=3;
 - transpose - transposes the matrix.
 - trace - returns a trace of the matrix.
 - scalarMult - multiplies every element of the matrix by given argument ```double scalar```.
-- rowMultByNum - takes two arguments ```int rowIndex``` and ```double k``` - index of the row which should be multiplied by ```k``` and k. Returns true if the function executes successfully, if the function returns false check if you pass the arguments correctly.
+- rowMultByNum - takes two arguments ```int rowIndex``` and ```double k``` - index of the row which should be multiplied by ```k``` and k.
 - rowAdd - adds row with index ```rowIndexA``` multiplied by ```k``` to row with index ```rowIndexB```.
 - rowSwap - swaps the row with the index ```rowIndexA``` with the row with the index ```rowIndexB```.
 - toREF - transforms the matrix to a REF(Row Echelon Form).
