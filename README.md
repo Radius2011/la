@@ -1,6 +1,6 @@
 # la
 
-Simple namespace for everything below
+Namespace for everything below
 
 ## Matrix Coordinates:
 
@@ -8,7 +8,7 @@ The coordinates of the matrix elements are implemented in a slightly unusual way
 
 ![Матриця](RMD/Image.png)
 # Classes:
-### SMatrix:
+## SMatrix:
 
 When creating an object, it takes one integer value - the number of dimensions of the matrix: 
 ```
@@ -17,12 +17,30 @@ la::SMatrix a(2); //creating 2D matrix named "a"
 The class is created for simple use of matrix data by a function.  
 Constructor performs dynamic memory allocation.  
 The destructor automatically releases the used memory.  
-The class also has a getDimensions() function that returns an integer - the number of dimensions in this matrix.  
-Access to matrix elements is implemented through the [ ] operator.
+Access to vector elements is implemented through the [ ] operator.
 ```
-a[0][2]=4;
+a[0][1]=3;
 ```
-### Vector:
+### Methods:
+- getDimensions - returns the number of dimensions in this matrix. ```a.getDimensions();```  
+- input - row by row fills the matrix with numbers from std::cin. ```a.input();```
+- print - outputs the matrix to the console using std::cout. Takes two arguments:
+```char elementSeparator``` and ```char rowSeparator```, the character after each outputed element and the character at the end of each line, respectively(default ' ' and '\n'). For example, if you call the function like ```a.print(',','\n');```, the console will show  
+```
+    1,2,3,  
+    4,5,6,
+    7,8,9,
+```
+- transpose - transposes the matrix.
+- trace - returns a trace of the matrix.
+- scalarMult - multiplies every element of the matrix by given argument ```double scalar```.
+- rowMultByNum - takes two arguments ```int rowIndex``` and ```double k``` - index of the row which should be multiplied by ```k``` and k. Returns true if the function executes successfully, if the function returns false check if you pass the arguments correctly.
+- rowAdd - adds row with index ```rowIndexA``` multiplied by ```k``` to row with index ```rowIndexB```.
+- rowSwap - swaps the row with the index ```rowIndexA``` with the row with the index ```rowIndexB```.
+- toREF - transforms the matrix to a REF(Row Echelon Form).
+- stabilizeZeros - removes the remainder from the division of binary numbers from matrix elements close to zero, so that when printing elements of the type ```-0.0000000007089``` it does not show ```-0```(this function is executed at the end of almost every function in this file).
+
+## Vector:
 
 When creating an object, it takes one integer value - the number of dimensions of the vector: 
 ```
@@ -30,82 +48,78 @@ la::Vector a(2); //creating 2D vector named "a"
 ```
 The class is created for simple use of vector data by a function.  
 Constructor performs dynamic memory allocation.  
-The destructor automatically releases the used memory.  
-The class also has a getDimensions() function that returns an integer - the number of dimensions in this vector.  
+The destructor automatically releases the used memory.    
 Access to vector elements is implemented through the [ ] operator.
 ```
 a[0]=0;
 ```
+### Methods:
+- getDimensions - returns the number of dimensions in this vector. ```a.getDimensions();```  
+- input - row by row fills the vector with numbers from std::cin. ```a.input();```
+- print - outputs the matrix to the console using std::cout. Takes one arguments:
+```char elementSeparator``` - the character after each outputed element(default ' '). For example, if you call the function like ```a.print(',');```, the console will show  
+```
+    1,2,3,
+    
+```
+- length - returns a length of vector.
+- normalize - normalizes vector(divides every element by vector length).
+- stabilizeZeros - removes the remainder from the division of binary numbers from vector elements close to zero, so that when printing elements of the type ```-0.0000000007089``` it does not show ```-0```(this function is executed at the end of almost every function in this file).
+
 # Functions:
 
 ## Operations with matrices:
 ### MatMult:
 
 The name of the function speaks for itself.  
-MatMult is a simple function for multiplying matrices with a time complexity of O(n^3), where n is the number of dimensions of the matrix.
+MatMult is a simple function for multiplying matrices.
 
 ### MatAdd:
 
-MatAdd is a function for adding matrices with a time complexity of O(n^2), where n is the number of dimensions of the matrix.
+MatAdd is a function for adding matrices.
 
-### transpose_matrix:
+### MatCopy:
 
-Transpose_matrix is a function performs the transposition of a square matrix.  
-It hastime complexity of O(n^2), where n is the number of dimensions of the matrix.
+Copy matrix(A) data to matrix(B).
 
 ### det_Gauss:
 
-det_Gauss function computes the determinant of a square matrix using Gaussian elimination.  
-It has time complexity of O(n^3), where n is the number of dimensions of the matrix.
+det_Gauss function computes the determinant of a square matrix using Gaussian elimination.
 
 ### MatInv_Gauss_Jordan:
 
-Matrix inversion function, which works according to the Gauss-Jordan method.  
-It has time complexity of O(n^3), where n is the number of dimensions of the matrix.
-
-### MatTrace:
-MatTrace is a simple function, which calculates the trace of given Matrix, with time complexity of O(n), where n is the number of dimensions of the matrix.
-
-### Mat_scalarMult:
-
-Mat_scalarMult function multiplies each element of a square matrix by a scalar.  
-Time complexity of the Mat_scalarMult function is O(n^2), where n is the number of dimensions of the matrix.
+Matrix inversion function, which works according to the Gauss-Jordan method.
 
 ## Operations with vectors:
 ### VectAdd:
 
-VectAdd function computes the element-wise sum of two vectors and stores the result in a third vector.  
-Time complexity of this function is O(n), where n is the number of dimensions of the vector.
+VectAdd function computes the element-wise sum of two vectors and stores the result in a third vector.
 
 ### LinTrans:
 
-LinTrans is a function to perform linear transformation with a time complexity of O(n^2), where n is the number of dimensions of the matrix.
-
-### Vect_scalarMult:
-
-Vect_scalarMult function multiplies each element of a vector by a scalar.  
-Time complexity of this function is O(n), where n is the number of dimensions of the vector.
+LinTrans is a function to perform linear transformation.
 
 ### dot_prod:
 
 Returns dot product of given Vectors.
-Time complexity of this function is O(n), where n is the number of dimensions of the vector.
 
 ### cross_prod:
 
 Returns cross product of given Vectors.
-Time complexity of this function is O(1).
 
-### VectLen:
+### Vect_IndepCheck:
 
-Returns Vector length.  
-Time complexity of this function is O(n), where n is the number of dimensions of the vector.
+Checks linear independence of n n-dimensional vectors represented as matrix.
 
-### VectNorm:
-
-Normalizes Vector.  
-Time complexity of this function is O(n), where n is the number of dimensions of the vector.
-
+## Systems of linear equations:
 ### LinSys_Gauss:
 
-It takes three arguments matrix, which represents coefficients near variables, vector (numbers after =) and resultVector where stores result values of all variables.
+It takes three arguments matrix, which represents coefficients near variables, vector (numbers after =) and resultVector where stores result values of all variables. Uses the Gaussian method to find the roots of the equations.
+
+### LinSys_LUdecomp:
+
+It takes three arguments matrix, which represents coefficients near variables, vector (numbers after =) and resultVector where stores result values of all variables.Uses the LU-decomposition method to find the roots of the equations.
+
+### LinSys_Cram:
+
+It takes three arguments matrix, which represents coefficients near variables, vector (numbers after =) and resultVector where stores result values of all variables.Uses the Cramar's rule to find the roots of the equations.
