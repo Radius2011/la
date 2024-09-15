@@ -1,6 +1,9 @@
 #ifndef LA_H
 #define LA_H
 
+#include <cmath>
+#include <iostream>
+
 namespace la {
     class SMatrix {
     private:
@@ -13,6 +16,16 @@ namespace la {
         SMatrix(const SMatrix&) = delete;
         SMatrix& operator=(const SMatrix&) = delete;
         int getDimensions() const;
+        void input();
+        void print(char element_separator=' ', char row_separator='\n');
+        void transpose();
+        int trace();
+        void scalarMult(double scalar);
+        bool rowMultByNum(int rowIndex, double k);
+        bool rowAdd(int rowIndexA, int rowIndexB, double k);
+        bool rowSwap(int rowIndexA, int rowIndexB);
+        bool toREF();
+        void stabilizeZeros();
     };
 
     class Vector {
@@ -26,22 +39,26 @@ namespace la {
         Vector(const Vector&) = delete;
         Vector& operator=(const Vector&) = delete;
         int getDimensions() const;
+        void input();
+        void print(char element_separator=' ');
+        void scalarMult(double scalar);
+        double length();
+        void normalize();
+        void stabilizeZeros();
     };
-    void MatMult(SMatrix& matrix1, SMatrix& matrix2, SMatrix& resultMatrix);
-    void MatAdd(SMatrix& matrix1, SMatrix& matrix2, SMatrix& resultMatrix);
-    void LinTrans(SMatrix& matrix, Vector& vector, Vector& resultVector);
-    void Transpose_matrix(SMatrix& matrix);
-    double det_Gauss(SMatrix& matrix);
-    void MatInv_Gauss_Jordan(SMatrix& matrix, SMatrix& resultMatrix);
-    int MatTrace(SMatrix& matrix);
-    void Mat_scalarMult(SMatrix& matrix, int scalar);
-    void VectAdd(Vector& vector1, Vector& vector2, Vector& resultVector);
-    void Vect_scalarMult(Vector& vector, int scalar);
-    long long dot_prod(Vector& vector1, Vector& vector2);
-    void cross_prod(Vector& vector1, Vector& vector2, Vector& resultVector);
-    double VectLen(Vector& vector);
-    void VectNorm(Vector& vector);
-    void LinSys_Gauss(SMatrix& matrix, Vector& vector, Vector& resultVector);
+    bool MatMult(SMatrix& matrix1, SMatrix& matrix2, SMatrix& resultMatrix);
+    bool MatAdd(SMatrix& matrix1, SMatrix& matrix2, SMatrix& resultMatrix);
+    bool LinTrans(SMatrix& matrix, Vector& vector, Vector& resultVector);
+    bool det_Gauss(SMatrix& matrix, double& result);
+    bool MatInv_Gauss_Jordan(SMatrix& matrix, SMatrix& resultMatrix);
+    bool VectAdd(Vector& vector1, Vector& vector2, Vector& resultVector);
+    bool dot_prod(Vector& vector1, Vector& vector2, double& result);
+    bool cross_prod(Vector& vector1, Vector& vector2, Vector& resultVector);
+    bool LinSys_Gauss(SMatrix& matrix, Vector& vector, Vector& resultVector);
+    bool LinSys_LUdecomp(SMatrix& matrix, Vector& vector, Vector& resultVector);
+    bool LinSys_Cram(SMatrix& matrix, Vector& vector, Vector& resultVector);
+    bool Vect_IndepCheck(SMatrix& matrix);
+    bool MatCopy(SMatrix& matrixA, SMatrix& matrixB);
 }
 
 #endif
